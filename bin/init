@@ -5,12 +5,12 @@ host=root@pine.cab
 shed_local=$HOME/Projects/shedder/local
 shed_remote=/usr/local/etc/shed
 
-mkdir -pv $shed_local
+mkdir -pv $shed_local/www
 
 ssh $host pkg install -y nginx-lite py39-certbot-nginx rsync
 
 rsync -avc --delete-after $shed_local/ $host:$shed_remote/
 
-rsync -vc $host:/etc/rc.conf $shed_local/
-rsync -vc $host:/etc/periodic.conf $shed_local/
-rsync -vc $host:/usr/local/etc/nginx/nginx.conf $shed_local/
+rsync -vcL $host:/etc/rc.conf $shed_local/
+rsync -vcL $host:/etc/periodic.conf $shed_local/
+rsync -vcL $host:/usr/local/etc/nginx/nginx.conf $shed_local/
