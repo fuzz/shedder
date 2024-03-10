@@ -1,0 +1,15 @@
+#!/bin/sh
+#
+
+$shed_local=$HOME/Projects/shedder/local
+$shed_remote=/usr/local/etc/shed
+
+ssh root@pine.cab mkdir -pv $shed_remote
+
+rsync -avc --delete-after $shed_local/ root@pine.cab:$shed_remote/
+
+ssh root@pine.cab ln -vfs $shed_remote/rc.conf /etc/rc.conf
+ssh root@pine.cab ln -vfs $shed_remote/periodic.conf /etc/periodic.conf
+ssh root@pine.cab ln -vfs $shed_remote/nginx.conf /usr/local/etc/nginx/nginx.conf
+
+ssh root@pine.cab service nginx restart
